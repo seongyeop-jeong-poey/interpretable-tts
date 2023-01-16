@@ -1,37 +1,22 @@
 
 
-<!-- saved from url=(0043)https://neuraltts.github.io/transformertts/ -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <title>INTERPRETING A TEXT-TO-SPEECH MODEL BY EXPLORING AND CORRECTING VULNERABLE INTERNAL ERROR UNITS</title>
-<!--     <link rel="shortcut icon" href="https://neuraltts.github.io/transformertts/img/ms.jpg">
-    <link rel="icon" href="https://neuraltts.github.io/transformertts/img/ms.jpg">
-    <link rel="apple-touch-icon" href="https://neuraltts.github.io/transformertts/img/ms.jpg"> -->
+
 </head>
 <body data-new-gr-c-s-check-loaded="14.1093.0" data-gr-ext-installed="">
 
 
 <article>
     <header>
-        <h1>Close to Human Quality TTS with Transformer</h1>
+        <h1>INTERPRETING A TEXT-TO-SPEECH MODEL BY EXPLORING AND CORRECTING VULNERABLE INTERNAL ERROR UNITS</h1>
     </header>
 </article>
 
-<div><b>Paper:</b> <a href="http://arxiv.org/abs/1809.08895">Close to Human Quality TTS with Transformer</a> (Accepted by AAAI2019. Presentation slices is <a href="https://neuraltts.github.io/transformertts/slices/(AAAI19-3124)Neural%20Speech%20Synthesis%20with%20Transformer%20Network.pptx">here</a>) </div>
-<div><b>Authors:</b> Naihan Li (<a href="https://github.com/ElijhaLee">Github page</a>), Shujie Liu, Yanqing Liu, Sheng Zhao, Ming Liu, Ming Zhou</div>
-<div><b>Abstract:</b> Although end-to-end neural text-to-speech (TTS) methods (such as Tacotron2) are proposed and
-    achieve state-of-the-art performance, they still suffer from two problems: 1) low efficiency during training and
-    inference; 2) hard to model long dependency using current recurrent neural networks (RNNs). Inspired by the success
-    of Transformer network in neural machine translation (NMT), in this paper, we introduce and adapt the multi-head
-    attention mechanism to replace the RNN structures and also the original attention mechanism in Tacotron2. With the
-    help of multi-head self-attention, the hidden states in the encoder and decoder are constructed in parallel, which
-    improves training efficiency. Meanwhile, any two inputs at different times are connected directly by a
-    self-attention mechanism, which solves the long range dependency problem effectively. Using phoneme sequences as
-    input, our Transformer TTS network generates mel spectrograms, followed by a WaveNet vocoder to output the final
-    audio results. Experiments are conducted to test the efficiency and performance of our new network. For the
-    efficiency, our Transformer TTS network can speed up the training about 4.25 times faster compared with Tacotron2.
-    For the performance, rigorous human tests show that our proposed model achieves state-of-the-art performance
-    (outperforms Tacotron2 with a gap of 0.048) and is very close to human quality (4.39 vs 4.44 in MOS).
+<div><b>Paper:</b> INTERPRETING A TEXT-TO-SPEECH MODEL BY EXPLORING AND CORRECTING VULNERABLE INTERNAL ERROR UNITS</a>  </div>
+<div><b>Authors:</b> Seongyeop Jeong, June Sig Sung, Inchul Hwang, Jaesik Choi</div>
+<div><b>Abstract:</b> Understanding and explaining the inner process of deep learning models remains challenging because models have numerous parameters and complex non-linear computations. It is therefore difficult to analyze and address the internal causes of artificial speech or alignment errors. In this paper, we utilize an adversarial attack method to generate artificial speech and explore vulnerabilities of the model. To detect defective units that cause errors in the model, and correct the speech by sequentially modifying internal units, a layer-wise relevance propagation (LRP) based model analysis is proposed. Through the qualitative and quantitative results, we show that LRP could be an appropriate approach to precisely capture propagated errors unit causing artificial speech in the encoder layers by evaluating attention alignment errors and mean opinion score (MOS) when internal defective units are corrected with the proposed algorithm.
 </div>
 
 <div>
