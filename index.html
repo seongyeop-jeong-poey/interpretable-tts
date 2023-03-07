@@ -9,20 +9,20 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>INTERPRETING A TEXT-TO-SPEECH MODEL BY EXPLORING AND CORRECTING VULNERABLE INTERNAL ERROR UNITS</title>
+    <title>An Automated Method to Correct Artifacts in Neural Text-to-speech Models</title>
   </head>
   <body>
 
     <div class="container">
 
-      <h1>INTERPRETING A TEXT-TO-SPEECH MODEL BY EXPLORING AND CORRECTING VULNERABLE INTERNAL ERROR UNITS</h1>
+      <h1>An Automated Method to Correct Artifacts in Neural Text-to-speech Models</h1>
 
       </br>
       </br>
 
       <h2>Abstract</h2>
       <p>
-      Understanding and explaining the inner process of deep learning models remains challenging because models have numerous parameters and complex non-linear computations. It is therefore difficult to analyze and address the internal causes of artificial speech or alignment errors. In this paper, we utilize an adversarial attack method to generate artificial speech and explore vulnerabilities of the model. To detect defective units that cause errors in the model, and correct the speech by sequentially modifying internal units, a layer-wise relevance propagation (LRP) based model analysis is proposed. Through the qualitative and quantitative results, we show that LRP could be an appropriate approach to precisely capture propagated errors unit causing artificial speech in the encoder layers by evaluating attention alignment errors and mean opinion score (MOS) when internal defective units are corrected with the proposed algorithm.
+      Recent advances in speech synthesis models have led to remarkable progress in producing speech that resembles human speech. However, these models still face challenges including making speech without errors. Existing artifact correction methods are inefficient as they require additional training data and a separate model to generate corrected speech. This paper introduces a new approach to address these issues by detecting and correcting defective units that contribute to speech artifacts using a neural network interpretability method. By automatically correcting defective units to be within the normal distribution, we achieved significant improvements in attention errors and quality of synthesized speech without additional data or training. Our results demonstrate the effectiveness of the interpretability method in identifying and correcting defects in speech synthesis models, providing researchers with a new approach to enhance the stability and quality of speech synthesis systems.
       </p>
 
 
