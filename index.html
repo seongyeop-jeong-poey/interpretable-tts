@@ -1,0 +1,626 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>An Automated Method to Correct Artifacts in Neural Text-to-Speech Models</title>
+  </head>
+  <body>
+
+    <div class="container">
+
+      <h1>An Automated Method to Correct Artifacts in Neural Text-to-speech Models</h1>
+
+      </br>
+      </br>
+
+      <h2>Abstract</h2>
+      <p>
+      Recent advancements in deep learning-based speech synthesis models have yielded substantial progress in generating natural speech. While these high-performing speech models find applications in various domains, a need remains to enhance mis-synthesized speech. Previous speech correction methodologies suffer from inefficiencies due to the need for manual error specification, model retraining, or additional data. This paper presents a novel approach for detecting and correcting errors within the model, obviating the need for additional resources or model retraining. Specifically, we propose a method for automatically identifying abnormal encoder vectors by scrutinizing the inherent limitations of neural network encoders responsible for contextualizing input sentences. Additionally, we introduce a correction algorithm designed to enhance speech artifacts by eliminating the incorrect relationships among phonemes that make abnormal encoder context vectors. Objective evaluation metrics, namely attention alignment error and Fréchet Wav2Vec Distance, along with subjective evaluation using the Comparative Mean Opinion Score, demonstrate significant enhancements in the corrected speech. These findings demonstrate the need for technologies that can autonomously identify and correct flaws in speech synthesis models.
+      </p>
+
+
+      </br>
+
+
+
+
+      <h2>Artificial speech correction with the proposed method</h2>
+      <p>
+      <!-- We offer four types of sample audio: normal, artifact, layer-wise relevance propagation (LRP), and random. The artifact samples is generated abnormally, with the incorrect portions highlighted in red. By using the LRP method to correct the defective units, various types of artifact speech can be corrected into normal speech naturally. However, there is no improvement when the units are corrected randomly. -->
+      <!-- 합성 음성, Local reference (Ours), Global reference (Truncation Trick), random reference 네 가지 유형의 샘플 오디오와 함께 script가 제공 됩니다. LJSpeech, low PMI LibriSpeech, high PMI LibriSpeech 세가지 종류 테스트 데이터에 대해서 실험을 진행하였습니다.  -->
+      The script is provided with four types of sample audio: synthesized speech, local reference (Ours), global reference (Truncation Trick), and random reference . We conducted experiments on three types of test data: LJSpeech, low PMI LibriSpeech, and high PMI LibriSpeech. We marked abnormal part of sentences as red highlights.
+
+
+
+      </p>
+
+      </br>
+
+      <h2>LJSpeech</h2>
+      </br>
+
+      <h5>
+        "LJ019-0368":"The <span style="color:red">latter</span> too was to be laid before the House of Commons.",
+
+</h5>
+  <table>
+  <thead>
+  <tr>
+  <th></th>
+  <th></th>
+  <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td>Synthesized Speech</td>
+  <td>Local reference (Ours)</td>
+  <td>Global reference (Truncation Trick)</td>
+  <td>Random reference </td>
+  </tr>
+  <tr>
+  <td><audio controls="" ><source src="wavs/LJ019-0368_ori_3_0_0.wav"/></audio></td>
+  <td><audio controls="" ><source src="wavs/LJ019-0368_proposed_3_0_0.wav"/></audio></td>
+  <td><audio controls="" ><source src="wavs/LJ019-0368_mean_3_0_0.wav"/></audio></td>
+  <td><audio controls="" ><source src="wavs/LJ019-0368_rn_3_0_0.wav"/></audio></td>
+  </tr>
+  </tbody>
+  </table>
+
+
+	      <h5>
+          "LJ050-0235":"It has also used other Federal law enforcement agents during Presidential visits to cities in which such agents are <span style="color:red">stationed</span>",
+
+	  </h5>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Synthesized Speech</td>
+        <td>Local reference (Ours)</td>
+        <td>Global reference (Truncation Trick)</td>
+        <td>Random reference </td>
+        </tr>
+        <tr>
+        <td><audio controls="" ><source src="wavs/LJ050-0235_ori_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/LJ050-0235_proposed_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/LJ050-0235_mean_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/LJ050-0235_rn_3_0_0.wav"/></audio></td>
+        </tr>
+        </tbody>
+        </table>
+	      <h5>
+          "LJ050-0084":"or, <span style="color:red">quote</span>, other high government officials in the nature of a complaint coupled with an expressed or implied determination to use a means",
+        </h5>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Synthesized Speech</td>
+        <td>Local reference (Ours)</td>
+        <td>Global reference (Truncation Trick)</td>
+        <td>Random reference </td>
+        </tr>
+        <tr>
+        <td><audio controls="" ><source src="wavs/LJ050-0084_ori_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/LJ050-0084_proposed_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/LJ050-0084_mean_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/LJ050-0084_rn_3_0_0.wav"/></audio></td>
+        </tr>
+        </tbody>
+        </table>
+	      <h5>
+          "LJ048-0053":"It is the conclusion of the Commission that, even in the absence of Secret Service <span style="color:red">criteria</span>",
+        </h5>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Synthesized Speech</td>
+        <td>Local reference (Ours)</td>
+        <td>Global reference (Truncation Trick)</td>
+        <td>Random reference </td>
+        </tr>
+        <tr>
+        <td><audio controls="" ><source src="wavs/LJ048-0053_ori_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/LJ048-0053_proposed_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/LJ048-0053_mean_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/LJ048-0053_rn_3_0_0.wav"/></audio></td>
+        </tr>
+        </tbody>
+        </table>
+
+        <h5>
+          "LJ043-0107":"Upon moving to New Orleans on April 24, <span style="color:red">1963,</span>",
+        </h5>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Synthesized Speech</td>
+        <td>Local reference (Ours)</td>
+        <td>Global reference (Truncation Trick)</td>
+        <td>Random reference </td>
+        </tr>
+        <tr>
+        <td><audio controls="" ><source src="wavs/LJ043-0107_ori_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/LJ043-0107_proposed_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/LJ043-0107_mean_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/LJ043-0107_rn_3_0_0.wav"/></audio></td>
+        </tr>
+        </tbody>
+        </table>
+
+
+        
+
+	      <h5>
+          "LJ006-0040":"The fact was that the <span style="color:red">years</span> as they passed, nearly twenty in all, had worked but little permanent improvement in this detestable prison.",
+    
+        </h5>
+            <table>
+            <thead>
+            <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td>Synthesized Speech</td>
+            <td>Local reference (Ours)</td>
+            <td>Global reference (Truncation Trick)</td>
+            <td>Random reference </td>
+            </tr>
+            <tr>
+            <td><audio controls="" ><source src="wavs/LJ006-0040_ori_3_0_0.wav"/></audio></td>
+            <td><audio controls="" ><source src="wavs/LJ006-0040_proposed_3_0_0.wav"/></audio></td>
+            <td><audio controls="" ><source src="wavs/LJ006-0040_mean_3_0_0.wav"/></audio></td>
+            <td><audio controls="" ><source src="wavs/LJ006-0040_rn_3_0_0.wav"/></audio></td>
+            </tr>
+            </tbody>
+            </table>
+         
+            
+
+	</br>
+	</br>
+      <h2>Low PMI LibriSpeech</h2>
+      </br>
+      <h5>
+        "4122-157669-0057":"<span style="color:red">CHURL</span> UPON THY EYES I THROW ALL THE POWER THAT THIS CHARM DOTH OWE WHEN THOU WAKEST LET LOVE FORBID SLEEP HIS SEAT ON THY EYELID",
+  </h5>
+      <table>
+      <thead>
+      <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td>Synthesized Speech</td>
+      <td>Local reference (Ours)</td>
+      <td>Global reference (Truncation Trick)</td>
+      <td>Random reference </td>
+      </tr>
+      <tr>
+      <td><audio controls="" ><source src="wavs/4122-157669-0057_ori_3_0_0.wav"/></audio></td>
+      <td><audio controls="" ><source src="wavs/4122-157669-0057_proposed_3_0_0.wav"/></audio></td>
+      <td><audio controls="" ><source src="wavs/4122-157669-0057_mean_3_0_0.wav"/></audio></td>
+      <td><audio controls="" ><source src="wavs/4122-157669-0057_rn_3_0_0.wav"/></audio></td>
+      </tr>
+      </tbody>
+      </table>
+
+      <h5>
+        "4179-25937-0046":"I AM NOT SO <span style="color:red">SURE</span> ABOUT SCHWARTZ I SAID THOUGHTFULLY",
+  </h5>
+      <table>
+      <thead>
+      <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td>Synthesized Speech</td>
+      <td>Local reference (Ours)</td>
+      <td>Global reference (Truncation Trick)</td>
+      <td>Random reference </td>
+      </tr>
+      <tr>
+      <td><audio controls="" ><source src="wavs/4179-25937-0046_ori_3_0_0.wav"/></audio></td>
+      <td><audio controls="" ><source src="wavs/4179-25937-0046_proposed_3_0_0.wav"/></audio></td>
+      <td><audio controls="" ><source src="wavs/4179-25937-0046_mean_3_0_0.wav"/></audio></td>
+      <td><audio controls="" ><source src="wavs/4179-25937-0046_rn_3_0_0.wav"/></audio></td>
+      </tr>
+      </tbody>
+      </table>
+
+      <h5>
+        "8272-279789-0044":"SNOWDROP SHALL DIE SHE CRIED IF IT COSTS MY <span style="color:red">OWN</span> LIFE",
+  </h5>
+      <table>
+      <thead>
+      <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td>Synthesized Speech</td>
+      <td>Local reference (Ours)</td>
+      <td>Global reference (Truncation Trick)</td>
+      <td>Random reference </td>
+      </tr>
+      <tr>
+      <td><audio controls="" ><source src="wavs/8272-279789-0044_ori_3_0_0.wav"/></audio></td>
+      <td><audio controls="" ><source src="wavs/8272-279789-0044_proposed_3_0_0.wav"/></audio></td>
+      <td><audio controls="" ><source src="wavs/8272-279789-0044_mean_3_0_0.wav"/></audio></td>
+      <td><audio controls="" ><source src="wavs/8272-279789-0044_rn_3_0_0.wav"/></audio></td>
+      </tr>
+      </tbody>
+      </table>
+
+      <h5>
+        "3557-8342-0054":"I <span style="color:red">HAVE</span> DREAMED TILL I SAW THEE I WAKE AND I BEHOLD <span style="color:red">THEE</span>",
+  </h5>
+      <table>
+      <thead>
+      <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td>Synthesized Speech</td>
+      <td>Local reference (Ours)</td>
+      <td>Global reference (Truncation Trick)</td>
+      <td>Random reference </td>
+      </tr>
+      <tr>
+      <td><audio controls="" ><source src="wavs/3557-8342-0054_ori_3_0_0.wav"/></audio></td>
+      <td><audio controls="" ><source src="wavs/3557-8342-0054_proposed_3_0_0.wav"/></audio></td>
+      <td><audio controls="" ><source src="wavs/3557-8342-0054_mean_3_0_0.wav"/></audio></td>
+      <td><audio controls="" ><source src="wavs/3557-8342-0054_rn_3_0_0.wav"/></audio></td>
+      </tr>
+      </tbody>
+      </table>
+
+      
+      <h5>
+        "4017-6540-0035":"QUOTATIONS ON THE FLYLEAF WHERE THE QUEEN'S LAW DOES NOT <span style="color:red">CARRY</span>",
+
+	  </h5>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Synthesized Speech</td>
+        <td>Local reference (Ours)</td>
+        <td>Global reference (Truncation Trick)</td>
+        <td>Random reference </td>
+        </tr>
+        <tr>
+        <td><audio controls="" ><source src="wavs/4017-6540-0035_ori_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/4017-6540-0035_proposed_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/4017-6540-0035_mean_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/4017-6540-0035_rn_3_0_0.wav"/></audio></td>
+        </tr>
+        </tbody>
+        </table>
+	      
+	      <h5>
+          "4042-12369-0039":"SOFT GOAT CHEESE TOME DE SAVOIE FRANCE SOFT PASTE GOAT OR COW OTHERS IN THE SAME CATEGORY <span style="color:red">ARE</span>",
+
+	  </h5>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Synthesized Speech</td>
+        <td>Local reference (Ours)</td>
+        <td>Global reference (Truncation Trick)</td>
+        <td>Random reference </td>
+        </tr>
+        <tr>
+        <td><audio controls="" ><source src="wavs/4042-12369-0039_ori_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/4042-12369-0039_proposed_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/4042-12369-0039_mean_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/4042-12369-0039_rn_3_0_0.wav"/></audio></td>
+        </tr>
+        </tbody>
+        </table>
+	      <h5>
+          "5983-39668-0033":"YES COLBERT LITTLE COLBERT MAZARIN'S FACTOTUM THE SAME <span style="color:red">WELL</span>",
+
+	  </h5>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Synthesized Speech</td>
+        <td>Local reference (Ours)</td>
+        <td>Global reference (Truncation Trick)</td>
+        <td>Random reference </td>
+        </tr>
+        <tr>
+        <td><audio controls="" ><source src="wavs/5983-39668-0033_ori_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/5983-39668-0033_proposed_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/5983-39668-0033_mean_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/5983-39668-0033_rn_3_0_0.wav"/></audio></td>
+        </tr>
+        </tbody>
+        </table>
+
+        <h5>
+          "3261-154309-0058":"TO <span style="color:red">SOUTH AMERICA</span> WITH ITS GUIANA ITS ARCHIPELAGO OF SOUTH SHETLAND ITS <span style="color:red">GEORGIA</span>",
+
+	  </h5>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Synthesized Speech</td>
+        <td>Local reference (Ours)</td>
+        <td>Global reference (Truncation Trick)</td>
+        <td>Random reference </td>
+        </tr>
+        <tr>
+        <td><audio controls="" ><source src="wavs/3261-154309-0058_ori_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/3261-154309-0058_proposed_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/3261-154309-0058_mean_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/3261-154309-0058_rn_3_0_0.wav"/></audio></td>
+        </tr>
+        </tbody>
+        </table>
+
+        <h5>
+          "2568-156115-0018":"THEY WERE NOW DISCUSSING DREAMS DIMMLER BEGAN TO PLAY <span style="color:red">NATASHA</span>",
+
+	  </h5>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Synthesized Speech</td>
+        <td>Local reference (Ours)</td>
+        <td>Global reference (Truncation Trick)</td>
+        <td>Random reference </td>
+        </tr>
+        <tr>
+        <td><audio controls="" ><source src="wavs/2568-156115-0018_ori_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/2568-156115-0018_proposed_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/2568-156115-0018_mean_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/2568-156115-0018_rn_3_0_0.wav"/></audio></td>
+        </tr>
+        </tbody>
+        </table>
+
+		</br>
+		      </br>
+
+      <h2>High PMI LibriSpeech</h2>
+      </br>
+      
+
+          <h5>
+            "1968-145732-0016":"AND <span style="color:red">CARRIED</span> HIM HOME TO HIS HOUSE AND WAS EXCEEDINGLY KIND TO HIM HE GAVE HIM TO HIS WIFE",
+        
+            </h5>
+                <table>
+                <thead>
+                <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <td>Synthesized Speech</td>
+                <td>Local reference (Ours)</td>
+                <td>Global reference (Truncation Trick)</td>
+                <td>Random reference </td>
+                </tr>
+                <tr>
+                <td><audio controls="" ><source src="wavs/1968-145732-0016_ori_3_0_0.wav"/></audio></td>
+                <td><audio controls="" ><source src="wavs/1968-145732-0016_proposed_3_0_0.wav"/></audio></td>
+                <td><audio controls="" ><source src="wavs/1968-145732-0016_mean_3_0_0.wav"/></audio></td>
+                <td><audio controls="" ><source src="wavs/1968-145732-0016_rn_3_0_0.wav"/></audio></td>
+                </tr>
+                </tbody>
+                </table>
+
+                <h5>
+                  "4546-16781-0038":"REGARD FOR A PERSON IS THE MENTAL VIEW OR FEELING THAT SPRINGS FROM A SENSE OF HIS <span style="color:red">VALUE</span>",
+              
+                  </h5>
+                      <table>
+                      <thead>
+                      <tr>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                      <td>Synthesized Speech</td>
+                      <td>Local reference (Ours)</td>
+                      <td>Global reference (Truncation Trick)</td>
+                      <td>Random reference </td>
+                      </tr>
+                      <tr>
+                      <td><audio controls="" ><source src="wavs/4546-16781-0038_ori_3_0_0.wav"/></audio></td>
+                      <td><audio controls="" ><source src="wavs/4546-16781-0038_proposed_3_0_0.wav"/></audio></td>
+                      <td><audio controls="" ><source src="wavs/4546-16781-0038_mean_3_0_0.wav"/></audio></td>
+                      <td><audio controls="" ><source src="wavs/4546-16781-0038_rn_3_0_0.wav"/></audio></td>
+                      </tr>
+                      </tbody>
+                      </table>
+            <h5>
+              "844-133697-0063":"SHE WAS <span style="color:red">REASSURED</span> QUICKLY ENOUGH BY HER SENSE OF HIS GREAT GOOD MANNERS",
+          
+              </h5>
+                  <table>
+                  <thead>
+                  <tr>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                  <td>Synthesized Speech</td>
+                  <td>Local reference (Ours)</td>
+                  <td>Global reference (Truncation Trick)</td>
+                  <td>Random reference </td>
+                  </tr>
+                  <tr>
+                  <td><audio controls="" ><source src="wavs/844-133697-0063_ori_3_0_0.wav"/></audio></td>
+                  <td><audio controls="" ><source src="wavs/844-133697-0063_proposed_3_0_0.wav"/></audio></td>
+                  <td><audio controls="" ><source src="wavs/844-133697-0063_mean_3_0_0.wav"/></audio></td>
+                  <td><audio controls="" ><source src="wavs/844-133697-0063_rn_3_0_0.wav"/></audio></td>
+                  </tr>
+                  </tbody>
+                  </table>  
+      <h5>
+        "5183-29124-0006":"AS HE WAS POPULARLY CALLED FOR HE HAD BEEN A CLERGYMAN IN <span style="color:red">HIS DAY</span>",
+
+	  </h5>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Synthesized Speech</td>
+        <td>Local reference (Ours)</td>
+        <td>Global reference (Truncation Trick)</td>
+        <td>Random reference </td>
+        </tr>
+        <tr>
+        <td><audio controls="" ><source src="wavs/5183-29124-0006_ori_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/5183-29124-0006_proposed_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/5183-29124-0006_mean_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/5183-29124-0006_rn_3_0_0.wav"/></audio></td>
+        </tr>
+        </tbody>
+        </table>
+	   
+	    
+	      <h5>
+          "7307-91998-0017":"HAD HE COME BECAUSE HE HAD HEARD OF THE BETROTHALS HE ADMITTED THAT IT WAS <span style="color:red">SO</span>",
+        </h5>
+        <table>
+        <thead>
+        <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Synthesized Speech</td>
+        <td>Local reference (Ours)</td>
+        <td>Global reference (Truncation Trick)</td>
+        <td>Random reference </td>
+        </tr>
+        <tr>
+        <td><audio controls="" ><source src="wavs/7307-91998-0017_ori_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/7307-91998-0017_proposed_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/7307-91998-0017_mean_3_0_0.wav"/></audio></td>
+        <td><audio controls="" ><source src="wavs/7307-91998-0017_rn_3_0_0.wav"/></audio></td>
+        </tr>
+        </tbody>
+        </table>
+	      
+      </br>
+	  
+	  
+	  
+
+
+      </br>
+
+    </div>
+
+  </body>
+</html>
