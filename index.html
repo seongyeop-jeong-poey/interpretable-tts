@@ -33,8 +33,6 @@
 
       <h2>Artificial speech correction with the proposed method</h2>
       <p>
-      <!-- We offer four types of sample audio: normal, artifact, layer-wise relevance propagation (LRP), and random. The artifact samples is generated abnormally, with the incorrect portions highlighted in red. By using the LRP method to correct the defective units, various types of artifact speech can be corrected into normal speech naturally. However, there is no improvement when the units are corrected randomly. -->
-      <!-- 합성 음성, Local reference (Ours), Global reference (Truncation Trick), random reference 네 가지 유형의 샘플 오디오와 함께 script가 제공 됩니다. LJSpeech, low PMI LibriSpeech, high PMI LibriSpeech 세가지 종류 테스트 데이터에 대해서 실험을 진행하였습니다.  -->
       The script is provided with four types of sample audio: synthesized speech, local reference (Ours), global reference (Truncation Trick), and random reference . We conducted experiments on three types of test data: LJSpeech, low PMI LibriSpeech, and high PMI LibriSpeech. We marked abnormal part of sentences as red highlights.
 
 
@@ -183,36 +181,6 @@
         </table>
 
 
-        
-
-	      <h5>
-          "LJ006-0040":"The fact was that the <span style="color:red">years</span> as they passed, nearly twenty in all, had worked but little permanent improvement in this detestable prison.",
-    
-        </h5>
-            <table>
-            <thead>
-            <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-            <td>Synthesized Speech</td>
-            <td>Local reference (Ours)</td>
-            <td>Global reference (Truncation Trick)</td>
-            <td>Random reference </td>
-            </tr>
-            <tr>
-            <td><audio controls="" ><source src="wavs/LJ006-0040_ori_3_0_0.wav"/></audio></td>
-            <td><audio controls="" ><source src="wavs/LJ006-0040_proposed_3_0_0.wav"/></audio></td>
-            <td><audio controls="" ><source src="wavs/LJ006-0040_mean_3_0_0.wav"/></audio></td>
-            <td><audio controls="" ><source src="wavs/LJ006-0040_rn_3_0_0.wav"/></audio></td>
-            </tr>
-            </tbody>
-            </table>
-         
             
 
 	</br>
@@ -300,61 +268,9 @@
       </tbody>
       </table>
 
-      <h5>
-        "3557-8342-0054":"I <span style="color:red">HAVE</span> DREAMED TILL I SAW THEE I WAKE AND I BEHOLD <span style="color:red">THEE</span>",
-  </h5>
-      <table>
-      <thead>
-      <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-      <td>Synthesized Speech</td>
-      <td>Local reference (Ours)</td>
-      <td>Global reference (Truncation Trick)</td>
-      <td>Random reference </td>
-      </tr>
-      <tr>
-      <td><audio controls="" ><source src="wavs/3557-8342-0054_ori_3_0_0.wav"/></audio></td>
-      <td><audio controls="" ><source src="wavs/3557-8342-0054_proposed_3_0_0.wav"/></audio></td>
-      <td><audio controls="" ><source src="wavs/3557-8342-0054_mean_3_0_0.wav"/></audio></td>
-      <td><audio controls="" ><source src="wavs/3557-8342-0054_rn_3_0_0.wav"/></audio></td>
-      </tr>
-      </tbody>
-      </table>
 
       
-      <h5>
-        "4017-6540-0035":"QUOTATIONS ON THE FLYLEAF WHERE THE QUEEN'S LAW DOES NOT <span style="color:red">CARRY</span>",
-
-	  </h5>
-        <table>
-        <thead>
-        <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-        <td>Synthesized Speech</td>
-        <td>Local reference (Ours)</td>
-        <td>Global reference (Truncation Trick)</td>
-        <td>Random reference </td>
-        </tr>
-        <tr>
-        <td><audio controls="" ><source src="wavs/4017-6540-0035_ori_3_0_0.wav"/></audio></td>
-        <td><audio controls="" ><source src="wavs/4017-6540-0035_proposed_3_0_0.wav"/></audio></td>
-        <td><audio controls="" ><source src="wavs/4017-6540-0035_mean_3_0_0.wav"/></audio></td>
-        <td><audio controls="" ><source src="wavs/4017-6540-0035_rn_3_0_0.wav"/></audio></td>
-        </tr>
-        </tbody>
-        </table>
+      
 	      
 	      <h5>
           "4042-12369-0039":"SOFT GOAT CHEESE TOME DE SAVOIE FRANCE SOFT PASTE GOAT OR COW OTHERS IN THE SAME CATEGORY <span style="color:red">ARE</span>",
@@ -411,61 +327,6 @@
         </tbody>
         </table>
 
-        <h5>
-          "3261-154309-0058":"TO <span style="color:red">SOUTH AMERICA</span> WITH ITS GUIANA ITS ARCHIPELAGO OF SOUTH SHETLAND ITS <span style="color:red">GEORGIA</span>",
-
-	  </h5>
-        <table>
-        <thead>
-        <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-        <td>Synthesized Speech</td>
-        <td>Local reference (Ours)</td>
-        <td>Global reference (Truncation Trick)</td>
-        <td>Random reference </td>
-        </tr>
-        <tr>
-        <td><audio controls="" ><source src="wavs/3261-154309-0058_ori_3_0_0.wav"/></audio></td>
-        <td><audio controls="" ><source src="wavs/3261-154309-0058_proposed_3_0_0.wav"/></audio></td>
-        <td><audio controls="" ><source src="wavs/3261-154309-0058_mean_3_0_0.wav"/></audio></td>
-        <td><audio controls="" ><source src="wavs/3261-154309-0058_rn_3_0_0.wav"/></audio></td>
-        </tr>
-        </tbody>
-        </table>
-
-        <h5>
-          "2568-156115-0018":"THEY WERE NOW DISCUSSING DREAMS DIMMLER BEGAN TO PLAY <span style="color:red">NATASHA</span>",
-
-	  </h5>
-        <table>
-        <thead>
-        <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-        <td>Synthesized Speech</td>
-        <td>Local reference (Ours)</td>
-        <td>Global reference (Truncation Trick)</td>
-        <td>Random reference </td>
-        </tr>
-        <tr>
-        <td><audio controls="" ><source src="wavs/2568-156115-0018_ori_3_0_0.wav"/></audio></td>
-        <td><audio controls="" ><source src="wavs/2568-156115-0018_proposed_3_0_0.wav"/></audio></td>
-        <td><audio controls="" ><source src="wavs/2568-156115-0018_mean_3_0_0.wav"/></audio></td>
-        <td><audio controls="" ><source src="wavs/2568-156115-0018_rn_3_0_0.wav"/></audio></td>
-        </tr>
-        </tbody>
-        </table>
 
 		</br>
 		      </br>
